@@ -1,31 +1,26 @@
 import 'package:flutter/material.dart';
 
-import './unit_converter_route.dart';
-import './unit.dart';
+import 'package:flutter_unit_converter/interfaces/category.dart';
+import 'package:flutter_unit_converter/widgets/pages/unit_converter/route.dart';
 
 const double BORDER_RADIUS = 10.0;
 const double ICON_PADDING = 20.0;
 
-class Category extends StatelessWidget {
+class CategoryItem extends StatelessWidget {
   final IconData icon;
   final String text;
+  final Category category;
 
-  Category({this.icon, this.text});
+  CategoryItem({this.icon, this.text, this.category});
 
   Function onTap(BuildContext context) {
     return () {
-      var unit = Unit(
-        name: text,
-        conversion: 4.0,
-      );
-
       Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => UnitConverterRoute(
-                  unit: unit,
-                  color: Colors.green,
-                )),
+              category: this.category,
+            )),
       );
     };
   }

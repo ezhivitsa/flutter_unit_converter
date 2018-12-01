@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 
 class Input extends StatelessWidget {
+  final Function(String) onChanged;
   final String hintText;
   final String labelText;
+  final String value;
 
   Input({
     this.hintText: 'Input value...',
     this.labelText: 'Label',
+    this.onChanged,
+    this.value,
   });
 
   @override
@@ -14,6 +18,8 @@ class Input extends StatelessWidget {
     return Container(
       margin: EdgeInsets.all(10.0),
       child: TextField(
+        controller: TextEditingController(text: this.value),
+        onChanged: this.onChanged,
         decoration: InputDecoration(
           hintText: hintText,
           labelText: labelText,

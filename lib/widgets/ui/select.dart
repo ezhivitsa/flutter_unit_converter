@@ -1,24 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
-class SelectItem {
-  final String label;
-  final String value;
-
-  SelectItem({
-    @required this.label,
-    @required this.value,
-  });
-}
+import 'package:flutter_unit_converter/models/select_item.dart';
 
 class Select extends StatelessWidget {
   final List<SelectItem> items;
+  final double value;
 
   Select({
     @required this.items,
+    @required this.value
   });
 
-  List<DropdownMenuItem<String>> dropdownItems() {
+  List<DropdownMenuItem<double>> dropdownItems() {
     return items.map((item) {
       return DropdownMenuItem(
         value: item.value,
@@ -53,7 +47,7 @@ class Select extends StatelessWidget {
             onChanged: (value) {
               print(value);
             },
-            value: items[0].value,
+            value: this.value,
           ),
         ),
       ),

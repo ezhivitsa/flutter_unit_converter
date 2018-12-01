@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import './category_route.dart';
+import 'package:flutter_unit_converter/widgets/pages/categories/route.dart';
 
 void main() {
   runApp(
