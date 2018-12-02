@@ -12,6 +12,9 @@ class ConvertContainer extends StatelessWidget {
   final String label;
   final double selectedUnit;
   final String value;
+  final String hint;
+  final Color color;
+  final Color borderColor;
 
   ConvertContainer({
     this.onValueChanged,
@@ -20,6 +23,9 @@ class ConvertContainer extends StatelessWidget {
     this.label,
     this.selectedUnit,
     this.value,
+    this.hint,
+    this.color,
+    this.borderColor,
   });
 
   @override
@@ -30,15 +36,19 @@ class ConvertContainer extends StatelessWidget {
       child: Column(
         children: <Widget>[
           Input(
-            labelText: label,
-            hintText: 'Unit value',
+            labelText: this.label,
+            hintText: this.hint,
             onChanged: this.onValueChanged,
             value: this.value,
+            color: this.color,
+            borderColor: this.borderColor,
           ),
           Select(
             items: selectItems,
             value: this.selectedUnit,
             onChanged: this.onUnitChanged,
+            color: this.color,
+            borderColor: this.borderColor,
           ),
         ],
       ),

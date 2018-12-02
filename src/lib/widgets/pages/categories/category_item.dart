@@ -10,13 +10,17 @@ class CategoryItem extends StatelessWidget {
   final IconData icon;
   final String text;
   final Category category;
+  final Color backgroudColor;
   final Color color;
+  final Color borderColor;
 
   CategoryItem({
     this.icon,
     this.text,
     this.category,
+    this.backgroudColor,
     this.color,
+    this.borderColor,
   });
 
   Function onTap(BuildContext context) {
@@ -26,7 +30,9 @@ class CategoryItem extends StatelessWidget {
         MaterialPageRoute(
           builder: (context) => UnitConverterRoute(
             category: this.category,
+            backgroudColor: this.backgroudColor,
             color: this.color,
+            borderColor: this.borderColor,
           )),
       );
     };
@@ -38,7 +44,7 @@ class CategoryItem extends StatelessWidget {
       child: Icon(
         this.icon,
         size: 50.0,
-        color: Colors.green[800],
+        color: Colors.blue[800],
       ),
     );
   }
@@ -48,7 +54,7 @@ class CategoryItem extends StatelessWidget {
       child: Text(this.text,
           style: TextStyle(
               fontSize: 25.0,
-              color: Colors.black54,
+              color: Colors.blue[800],
               fontWeight: FontWeight.w600)),
     );
   }

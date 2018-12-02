@@ -4,7 +4,7 @@ Unit converter created with flutter.
 
 ## Features
 
-* Convert distance values
+* Convert distance values:
   * Meter
   * Kilometer
   * Centimeter
@@ -13,13 +13,30 @@ Unit converter created with flutter.
   * Yard
   * Foot
 
-* Convert weight values
+* Convert weight values:
   * Kilogram
   * Gram
   * Miligram
   * Metric Ton
   * Long Ton
   * Pound
+
+* Convert time values:
+  * Second
+  * Minute
+  * Hour
+  * Day
+  * Week
+
+## Screenshotes
+
+![Categories screen](https://github.com/ezhivitsa/flutter_unit_converter/assets/1.png "Categories screen"){:width="200px"}
+
+![Distance converter](https://github.com/ezhivitsa/flutter_unit_converter/assets/2.png "Distance converter"){:width="200px"}
+
+![Weight converter](https://github.com/ezhivitsa/flutter_unit_converter/assets/3.png "Weight converter"){:width="200px"}
+
+![Time converter](https://github.com/ezhivitsa/flutter_unit_converter/assets/4.png "Time converter"){:width="200px"}
 
 ## License
 

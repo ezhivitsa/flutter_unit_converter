@@ -2,22 +2,30 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_unit_converter/interfaces/category.dart';
 
+import 'package:flutter_unit_converter/widgets/ui/layout.dart';
+
 import 'package:flutter_unit_converter/widgets/pages/unit_converter/convert_container.dart';
 import 'package:flutter_unit_converter/widgets/pages/unit_converter/exchange.dart';
 
 class UnitConverterRoute extends StatefulWidget {
   final Category category;
+  final Color backgroudColor;
   final Color color;
+  final Color borderColor;
 
   UnitConverterRoute({
     this.category,
+    this.backgroudColor,
     this.color,
+    this.borderColor,
   });
 
   @override
   _UnitConverterRouteState createState() => _UnitConverterRouteState(
     this.category,
+    backgroudColor: this.backgroudColor,
     color: this.color,
+    borderColor: this.borderColor,
   );
 }
 
@@ -29,9 +37,15 @@ class _UnitConverterRouteState extends State<UnitConverterRoute> {
   String _toValue;
 
   Category category;
+  Color backgroudColor;
   Color color;
+  Color borderColor;
 
-  _UnitConverterRouteState(Category category, { this.color }) {
+  _UnitConverterRouteState(Category category, {
+    this.backgroudColor,
+    this.color,
+    this.borderColor,
+  }) {
     this.category = category;
 
     var units = category.getUnits();
@@ -85,34 +99,36 @@ class _UnitConverterRouteState extends State<UnitConverterRoute> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: this.color,
-      appBar: AppBar(
-        backgroundColor: this.color,
-        title: Text(category.name),
-      ),
-      body: Container(
-        child: Column(
-          children: <Widget>[
-            ConvertContainer(
-              category: this.category,
-              label: 'From',
-              selectedUnit: this._fromUnit,
-              value: this._fromValue,
-              onValueChanged: this.onFromValueChanged,
-              onUnitChanged: this.onFromUnitChanged,
-            ),
-            Exchange(),
-            ConvertContainer(
-              category: this.category,
-              label: 'To',
-              selectedUnit: this._toUnit,
-              value: this._toValue,
-              onValueChanged: this.onToValueChanged,
-              onUnitChanged: this.onToUnitChanged,
-            )
-          ],
-        ),
+    return Layout(
+      backgroundColor: this.backgroudColor,
+      color: this.color,
+      title: category.name,
+      child: ListView(
+        children: <Widget>[
+          ConvertContainer(
+            category: this.category,
+            label: 'From',
+            hint: 'From value',
+            selectedUnit: this._fromUnit,
+            value: this._fromValue,
+            onValueChanged: this.onFromValueChanged,
+            onUnitChanged: this.onFromUnitChanged,
+            color: this.color,
+            borderColor: this.borderColor,
+          ),
+          Exchange(),
+          ConvertContainer(
+            category: this.category,
+            label: 'To',
+            hint: 'To value',
+            selectedUnit: this._toUnit,
+            value: this._toValue,
+            onValueChanged: this.onToValueChanged,
+            onUnitChanged: this.onToUnitChanged,
+            color: this.color,
+            borderColor: this.borderColor,
+          )
+        ],
       ),
     );
   }
