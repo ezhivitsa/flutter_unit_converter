@@ -30,13 +30,13 @@ Unit converter created with flutter.
 
 ## Screenshotes
 
-![Categories screen](https://github.com/ezhivitsa/flutter_unit_converter/assets/1.png "Categories screen"){:width="200px"}
+<img src="https://github.com/ezhivitsa/flutter_unit_converter/blob/master/assets/1.png" width="200px" alt="Categories screen" />
 
-![Distance converter](https://github.com/ezhivitsa/flutter_unit_converter/assets/2.png "Distance converter"){:width="200px"}
+<img src="https://github.com/ezhivitsa/flutter_unit_converter/blob/master/assets/2.png" width="200px" alt="Distance converter" />
 
-![Weight converter](https://github.com/ezhivitsa/flutter_unit_converter/assets/3.png "Weight converter"){:width="200px"}
+<img src="https://github.com/ezhivitsa/flutter_unit_converter/blob/master/assets/3.png" width="200px" alt="Weight converter" />
 
-![Time converter](https://github.com/ezhivitsa/flutter_unit_converter/assets/4.png "Time converter"){:width="200px"}
+<img src="https://github.com/ezhivitsa/flutter_unit_converter/blob/master/assets/4.png" width="200px" alt="Time converter" />
 
 ## License
 
