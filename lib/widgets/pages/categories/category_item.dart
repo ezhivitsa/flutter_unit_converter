@@ -10,17 +10,24 @@ class CategoryItem extends StatelessWidget {
   final IconData icon;
   final String text;
   final Category category;
+  final Color color;
 
-  CategoryItem({this.icon, this.text, this.category});
+  CategoryItem({
+    this.icon,
+    this.text,
+    this.category,
+    this.color,
+  });
 
   Function onTap(BuildContext context) {
     return () {
       Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => UnitConverterRoute(
-              category: this.category,
-            )),
+          builder: (context) => UnitConverterRoute(
+            category: this.category,
+            color: this.color,
+          )),
       );
     };
   }

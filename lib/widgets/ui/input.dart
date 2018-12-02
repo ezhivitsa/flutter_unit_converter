@@ -13,21 +13,30 @@ class Input extends StatelessWidget {
     this.value,
   });
 
+//  @override
+//  Widget build(BuildContext context) {
+//    return Container(
+//      margin: EdgeInsets.all(10.0),
+//      child: TextField(
+//        decoration: InputDecoration(
+//          hintText: hintText,
+//          labelText: labelText,
+//          labelStyle: TextStyle(
+//            fontSize: 25,
+//            color: Colors.deepPurple,
+//            fontWeight: FontWeight.w600,
+//          ),
+//        ),
+//      )
+//    );
+//  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(10.0),
-      child: TextField(
-        controller: TextEditingController(text: this.value),
-        onChanged: this.onChanged,
+        margin: EdgeInsets.all(10.0),
+        child: TextField(
         decoration: InputDecoration(
-          hintText: hintText,
-          labelText: labelText,
-          labelStyle: TextStyle(
-            fontSize: 25,
-            color: Colors.deepPurple,
-            fontWeight: FontWeight.w600,
-          ),
           fillColor: Colors.white70,
           filled: true,
           focusedBorder: OutlineInputBorder(
@@ -49,6 +58,16 @@ class Input extends StatelessWidget {
             )
           ),
         ),
+        controller: TextEditingController.fromValue(
+          TextEditingValue(
+            text: this.value,
+            selection: TextSelection.collapsed(offset: this.value.length)
+          ),
+        ),
+        keyboardType: TextInputType.numberWithOptions(
+          decimal: true,
+        ),
+        onChanged: this.onChanged,
         style: TextStyle(
           fontSize: 20,
           color: Colors.black54,

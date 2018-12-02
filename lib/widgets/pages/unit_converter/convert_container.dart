@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_unit_converter/models/unit.dart';
 import 'package:flutter_unit_converter/interfaces/category.dart';
 
 import 'package:flutter_unit_converter/widgets/ui/input.dart';
@@ -8,10 +7,10 @@ import 'package:flutter_unit_converter/widgets/ui/select.dart';
 
 class ConvertContainer extends StatelessWidget {
   final Function(String) onValueChanged;
-  final Function(Unit) onUnitChanged;
+  final Function(double) onUnitChanged;
   final Category category;
   final String label;
-  final Unit selectedUnit;
+  final double selectedUnit;
   final String value;
 
   ConvertContainer({
@@ -25,10 +24,7 @@ class ConvertContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var selectItems = category.toSelectItems();
-    var selected = selectedUnit != null
-        ? selectedUnit.conversion
-        : selectItems[0].value;
+    var selectItems = this.category.toSelectItems();
 
     return Container(
       child: Column(
@@ -41,7 +37,8 @@ class ConvertContainer extends StatelessWidget {
           ),
           Select(
             items: selectItems,
-            value: selected,
+            value: this.selectedUnit,
+            onChanged: this.onUnitChanged,
           ),
         ],
       ),

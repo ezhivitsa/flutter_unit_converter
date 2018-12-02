@@ -2,6 +2,8 @@ import 'package:flutter_unit_converter/interfaces/category.dart';
 import 'package:flutter_unit_converter/models/unit.dart';
 
 class WeightCategory extends Category {
+  String name = 'Weight';
+
   List<Unit> getUnits() {
     return <Unit>[
       Unit(name: 'Kilogram', conversion: 1),

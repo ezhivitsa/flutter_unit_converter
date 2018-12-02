@@ -3,6 +3,8 @@ import 'package:flutter_unit_converter/interfaces/category.dart';
 import 'package:flutter_unit_converter/models/unit.dart';
 
 class DistanceCategory extends Category {
+  String name = 'Distance';
+
   List<Unit> getUnits() {
     return <Unit>[
       Unit(name: 'Meter', conversion: 1),

@@ -6,10 +6,12 @@ import 'package:flutter_unit_converter/models/select_item.dart';
 class Select extends StatelessWidget {
   final List<SelectItem> items;
   final double value;
+  final Function(double) onChanged;
 
   Select({
     @required this.items,
-    @required this.value
+    @required this.value,
+    @required this.onChanged,
   });
 
   List<DropdownMenuItem<double>> dropdownItems() {
@@ -44,9 +46,7 @@ class Select extends StatelessWidget {
             ),
             items: dropdownItems(),
             isExpanded: true,
-            onChanged: (value) {
-              print(value);
-            },
+            onChanged: this.onChanged,
             value: this.value,
           ),
         ),

@@ -25,24 +25,26 @@ class CategoryRoute extends StatelessWidget {
         title: Text('Categories'),
       ),
       body: Container(
-          color: Colors.blue[100],
-          child: OrientationBuilder(builder: (context, orientation) {
-            return orientationList(
-              orientation,
-              children: <Widget>[
-                CategoryItem(
-                  icon: Icons.fitness_center,
-                  text: 'Distance',
-                  category: DistanceCategory(),
-                ),
-                CategoryItem(
-                  icon: Icons.line_weight,
-                  text: 'Weight',
-                  category: WeightCategory(),
-                ),
-              ],
-            );
-          })),
+        color: Colors.blue[100],
+        child: OrientationBuilder(builder: (context, orientation) {
+          return orientationList(
+            orientation,
+            children: <Widget>[
+              CategoryItem(
+                icon: Icons.compare_arrows,
+                text: 'Distance',
+                category: DistanceCategory(),
+                color: Colors.green,
+              ),
+              CategoryItem(
+                icon: Icons.fitness_center,
+                text: 'Weight',
+                category: WeightCategory(),
+                color: Colors.lightBlueAccent,
+              ),
+            ],
+          );
+        })),
     );
   }
 }

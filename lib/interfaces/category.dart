@@ -4,6 +4,8 @@ import 'package:flutter_unit_converter/models/select_item.dart';
 abstract class Category {
   List<Unit> getUnits();
 
+  String name;
+
   List<SelectItem> toSelectItems() {
     var units = getUnits();
 
@@ -12,6 +14,6 @@ abstract class Category {
         label: unit.name,
         value: unit.conversion,
       );
-    });
+    }).toList();
   }
 }
