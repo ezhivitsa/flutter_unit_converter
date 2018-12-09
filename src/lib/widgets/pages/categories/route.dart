@@ -7,7 +7,22 @@ import 'package:flutter_unit_converter/models/time_category.dart';
 import 'package:flutter_unit_converter/widgets/ui/layout.dart';
 import './category_item.dart';
 
-class CategoryRoute extends StatelessWidget {
+class CategoryRoute extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _CategoryRoute();
+  }
+}
+
+class _CategoryRoute extends State<CategoryRoute> {
+  CategoryItem _selectedCategory;
+
+  void onCategoryTap(CategoryItem category) {
+    this.setState(() {
+      _selectedCategory = category;
+    });
+  }
+
   Widget orientationList(Orientation orientation, {List<Widget> children}) {
     if (orientation == Orientation.portrait) {
       return ListView.builder(
@@ -20,43 +35,43 @@ class CategoryRoute extends StatelessWidget {
     }
   }
 
+  List<Widget> categories() {
+    return <Widget>[
+      CategoryItem(
+        icon: Icons.compare_arrows,
+        text: 'Distance',
+        category: DistanceCategory(),
+        onTap: this.onCategoryTap,
+      ),
+      CategoryItem(
+        icon: Icons.fitness_center,
+        text: 'Weight',
+        category: WeightCategory(),
+        onTap: this.onCategoryTap,
+      ),
+      CategoryItem(
+        icon: Icons.timer,
+        text: 'Time',
+        category: TimeCategory(),
+        onTap: this.onCategoryTap,
+      )
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     return Layout(
-      title: 'Categories',
+      frontTitle: 'Select a Category',
+      backTitle: _selectedCategory?.text ?? '',
       backgroundColor: Colors.blue[200],
       color: Colors.blue[800],
-      child: OrientationBuilder(builder: (context, orientation) {
+      frontPanel: OrientationBuilder(builder: (context, orientation) {
         return orientationList(
           orientation,
-          children: <Widget>[
-            CategoryItem(
-              icon: Icons.compare_arrows,
-              text: 'Distance',
-              category: DistanceCategory(),
-              backgroudColor: Colors.green[300],
-              color: Colors.green[800],
-              borderColor: Colors.green[500],
-            ),
-            CategoryItem(
-              icon: Icons.fitness_center,
-              text: 'Weight',
-              category: WeightCategory(),
-              backgroudColor: Colors.orange[200],
-              color: Colors.orange[900],
-              borderColor: Colors.orange[600],
-            ),
-            CategoryItem(
-              icon: Icons.timer,
-              text: 'Time',
-              category: TimeCategory(),
-              backgroudColor: Colors.yellow[200],
-              borderColor: Colors.yellow[700],
-              color: Colors.yellow[900],
-            ),
-          ],
+          children: categories(),
         );
       }),
+      category: _selectedCategory,
     );
   }
 }

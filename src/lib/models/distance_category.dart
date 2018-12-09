@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 import 'package:flutter_unit_converter/interfaces/category.dart';
 
 import 'package:flutter_unit_converter/models/unit.dart';
@@ -15,5 +17,12 @@ class DistanceCategory extends Category {
       Unit(name: 'Yard', conversion: 0.9144),
       Unit(name: 'Foot', conversion: 0.3048),
     ];
+  }
+
+  ColorSwatch getColorSwatch() {
+    return ColorSwatch(0xFF2E7D32, {
+      'background': Color(0xFF81C784),
+      'border': Color(0xFF4CAF50),
+    });
   }
 }

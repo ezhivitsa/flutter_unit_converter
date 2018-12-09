@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 import 'package:flutter_unit_converter/models/unit.dart';
 import 'package:flutter_unit_converter/models/select_item.dart';
 
@@ -16,4 +18,6 @@ abstract class Category {
       );
     }).toList();
   }
+
+  ColorSwatch getColorSwatch();
 }

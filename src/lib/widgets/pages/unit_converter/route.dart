@@ -9,23 +9,14 @@ import 'package:flutter_unit_converter/widgets/pages/unit_converter/exchange.dar
 
 class UnitConverterRoute extends StatefulWidget {
   final Category category;
-  final Color backgroudColor;
-  final Color color;
-  final Color borderColor;
 
   UnitConverterRoute({
     this.category,
-    this.backgroudColor,
-    this.color,
-    this.borderColor,
   });
 
   @override
   _UnitConverterRouteState createState() => _UnitConverterRouteState(
     this.category,
-    backgroudColor: this.backgroudColor,
-    color: this.color,
-    borderColor: this.borderColor,
   );
 }
 
@@ -37,15 +28,8 @@ class _UnitConverterRouteState extends State<UnitConverterRoute> {
   String _toValue;
 
   Category category;
-  Color backgroudColor;
-  Color color;
-  Color borderColor;
 
-  _UnitConverterRouteState(Category category, {
-    this.backgroudColor,
-    this.color,
-    this.borderColor,
-  }) {
+  _UnitConverterRouteState(Category category) {
     this.category = category;
 
     var units = category.getUnits();
@@ -99,11 +83,13 @@ class _UnitConverterRouteState extends State<UnitConverterRoute> {
 
   @override
   Widget build(BuildContext context) {
+    var swatch = this.category.getColorSwatch();
+
     return Layout(
-      backgroundColor: this.backgroudColor,
-      color: this.color,
-      title: category.name,
-      child: ListView(
+      backgroundColor: swatch['backgroud'],
+      color: swatch,
+      frontTitle: category.name,
+      frontPanel: ListView(
         children: <Widget>[
           ConvertContainer(
             category: this.category,
@@ -113,8 +99,6 @@ class _UnitConverterRouteState extends State<UnitConverterRoute> {
             value: this._fromValue,
             onValueChanged: this.onFromValueChanged,
             onUnitChanged: this.onFromUnitChanged,
-            color: this.color,
-            borderColor: this.borderColor,
           ),
           Exchange(),
           ConvertContainer(
@@ -125,8 +109,6 @@ class _UnitConverterRouteState extends State<UnitConverterRoute> {
             value: this._toValue,
             onValueChanged: this.onToValueChanged,
             onUnitChanged: this.onToUnitChanged,
-            color: this.color,
-            borderColor: this.borderColor,
           )
         ],
       ),

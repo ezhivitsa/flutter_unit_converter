@@ -13,8 +13,6 @@ class ConvertContainer extends StatelessWidget {
   final double selectedUnit;
   final String value;
   final String hint;
-  final Color color;
-  final Color borderColor;
 
   ConvertContainer({
     this.onValueChanged,
@@ -24,13 +22,12 @@ class ConvertContainer extends StatelessWidget {
     this.selectedUnit,
     this.value,
     this.hint,
-    this.color,
-    this.borderColor,
   });
 
   @override
   Widget build(BuildContext context) {
     var selectItems = this.category.toSelectItems();
+    var swatch = this.category.getColorSwatch();
 
     return Container(
       child: Column(
@@ -40,15 +37,15 @@ class ConvertContainer extends StatelessWidget {
             hintText: this.hint,
             onChanged: this.onValueChanged,
             value: this.value,
-            color: this.color,
-            borderColor: this.borderColor,
+            color: swatch,
+            borderColor: swatch['border'],
           ),
           Select(
             items: selectItems,
             value: this.selectedUnit,
             onChanged: this.onUnitChanged,
-            color: this.color,
-            borderColor: this.borderColor,
+            color: swatch,
+            borderColor: swatch['border'],
           ),
         ],
       ),

@@ -10,6 +10,7 @@ class Input extends StatelessWidget {
   final String value;
   final Color color;
   final Color borderColor;
+  final bool showError;
 
   Input({
     this.hintText: 'Input value...',
@@ -18,14 +19,16 @@ class Input extends StatelessWidget {
     this.value,
     this.color = DEFAULT_COLOR,
     this.borderColor = DEFAULT_BORDER_COLOR,
+    this.showError = false,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: EdgeInsets.all(10.0),
-        child: TextField(
+      margin: EdgeInsets.all(10.0),
+      child: TextField(
         decoration: InputDecoration(
+          errorText: this.showError ? 'Invalid number entered' : null,
           labelText: this.labelText,
           labelStyle: TextStyle(
             fontSize: 25,

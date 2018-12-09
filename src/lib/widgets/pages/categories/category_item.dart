@@ -10,32 +10,17 @@ class CategoryItem extends StatelessWidget {
   final IconData icon;
   final String text;
   final Category category;
-  final Color backgroudColor;
-  final Color color;
-  final Color borderColor;
+  final Function onTap;
 
   CategoryItem({
     this.icon,
     this.text,
     this.category,
-    this.backgroudColor,
-    this.color,
-    this.borderColor,
+    this.onTap,
   });
 
-  Function onTap(BuildContext context) {
-    return () {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => UnitConverterRoute(
-            category: this.category,
-            backgroudColor: this.backgroudColor,
-            color: this.color,
-            borderColor: this.borderColor,
-          )),
-      );
-    };
+  void _onTap() {
+    onTap(this);
   }
 
   Widget _iconWidget() {
@@ -64,7 +49,7 @@ class CategoryItem extends StatelessWidget {
     return Container(
       child: InkWell(
         borderRadius: BorderRadius.circular(BORDER_RADIUS),
-        onTap: this.onTap(context),
+        onTap: _onTap,
         highlightColor: Colors.amber[100],
         child: Row(
           children: <Widget>[

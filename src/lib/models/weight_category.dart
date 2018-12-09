@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 import 'package:flutter_unit_converter/interfaces/category.dart';
 import 'package:flutter_unit_converter/models/unit.dart';
 
@@ -13,5 +15,12 @@ class WeightCategory extends Category {
       Unit(name: 'Long Ton', conversion: 1016.04608),
       Unit(name: 'Pound', conversion: 0.453592),
     ];
+  }
+
+  ColorSwatch getColorSwatch() {
+    return ColorSwatch(0xFFE65100, {
+      'background': Color(0xFFFFCC80),
+      'border': Color(0xFFFB8C00),
+    });
   }
 }
