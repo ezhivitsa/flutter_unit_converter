@@ -75,6 +75,46 @@ class Layout extends StatefulWidget {
   }
 }
 
+class _FrontPanel extends StatelessWidget {
+  final Widget child;
+  final String title;
+
+  _FrontPanel({
+    this.child,
+    this.title,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      elevation: 2.0,
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(16.0),
+        topRight: Radius.circular(16.0),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          GestureDetector(
+            child: Container(
+              height: 48.0,
+              padding: EdgeInsetsDirectional.only(start: 16.0),
+              alignment: AlignmentDirectional.centerStart,
+              child: Text(this.title),
+            ),
+          ),
+          Divider(
+            height: 1.0,
+          ),
+          Expanded(
+            child: child,
+          )
+        ],
+      ),
+    );
+  }
+}
+
 class _Layout extends State<Layout> with SingleTickerProviderStateMixin {
   AnimationController _controller;
 
@@ -130,6 +170,34 @@ class _Layout extends State<Layout> with SingleTickerProviderStateMixin {
     );
   }
 
+  Widget _buildStack(BuildContext context, BoxConstraints constraints) {
+    const double panelTitleHeight = 48.0;
+    final Size panelSize = constraints.biggest;
+    final double panelTop = panelSize.height - panelTitleHeight;
+
+    Animation<RelativeRect> panelAnimation = RelativeRectTween(
+      begin: RelativeRect.fromLTRB(
+          0.0, panelTop, 0.0, panelTop - panelSize.height),
+      end: RelativeRect.fromLTRB(0.0, 0.0, 0.0, 0.0),
+    ).animate(_controller.view);
+
+    return Container(
+      color: widget.backgroundColor,
+      child: Stack(
+        children: <Widget>[
+          widget.backPanel,
+          PositionedTransition(
+            rect: panelAnimation,
+            child: _FrontPanel(
+              child: widget.frontPanel,
+              title: widget.frontTitle,
+            )
+          )
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -160,8 +228,8 @@ class _Layout extends State<Layout> with SingleTickerProviderStateMixin {
         ),
       ),
       backgroundColor: widget.backgroundColor,
-      body: Container(
-        child: widget.frontPanel
+      body: LayoutBuilder(
+        builder: _buildStack,
       ),
     );
   }

@@ -83,35 +83,28 @@ class _UnitConverterRouteState extends State<UnitConverterRoute> {
 
   @override
   Widget build(BuildContext context) {
-    var swatch = this.category.getColorSwatch();
-
-    return Layout(
-      backgroundColor: swatch['backgroud'],
-      color: swatch,
-      frontTitle: category.name,
-      frontPanel: ListView(
-        children: <Widget>[
-          ConvertContainer(
-            category: this.category,
-            label: 'From',
-            hint: 'From value',
-            selectedUnit: this._fromUnit,
-            value: this._fromValue,
-            onValueChanged: this.onFromValueChanged,
-            onUnitChanged: this.onFromUnitChanged,
-          ),
-          Exchange(),
-          ConvertContainer(
-            category: this.category,
-            label: 'To',
-            hint: 'To value',
-            selectedUnit: this._toUnit,
-            value: this._toValue,
-            onValueChanged: this.onToValueChanged,
-            onUnitChanged: this.onToUnitChanged,
-          )
-        ],
-      ),
+    return ListView(
+      children: <Widget>[
+        ConvertContainer(
+          category: this.category,
+          label: 'From',
+          hint: 'From value',
+          selectedUnit: this._fromUnit,
+          value: this._fromValue,
+          onValueChanged: this.onFromValueChanged,
+          onUnitChanged: this.onFromUnitChanged,
+        ),
+        Exchange(),
+        ConvertContainer(
+          category: this.category,
+          label: 'To',
+          hint: 'To value',
+          selectedUnit: this._toUnit,
+          value: this._toValue,
+          onValueChanged: this.onToValueChanged,
+          onUnitChanged: this.onToUnitChanged,
+        )
+      ],
     );
   }
 }

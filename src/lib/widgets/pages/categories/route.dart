@@ -5,6 +5,7 @@ import 'package:flutter_unit_converter/models/weight_category.dart';
 import 'package:flutter_unit_converter/models/time_category.dart';
 
 import 'package:flutter_unit_converter/widgets/ui/layout.dart';
+import 'package:flutter_unit_converter/widgets/pages/unit_converter/route.dart';
 import './category_item.dart';
 
 class CategoryRoute extends StatefulWidget {
@@ -16,6 +17,13 @@ class CategoryRoute extends StatefulWidget {
 
 class _CategoryRoute extends State<CategoryRoute> {
   CategoryItem _selectedCategory;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _selectedCategory = categories()[0];
+  }
 
   void onCategoryTap(CategoryItem category) {
     this.setState(() {
@@ -61,17 +69,19 @@ class _CategoryRoute extends State<CategoryRoute> {
   @override
   Widget build(BuildContext context) {
     return Layout(
-      frontTitle: 'Select a Category',
-      backTitle: _selectedCategory?.text ?? '',
+      frontTitle: _selectedCategory?.text ?? '',
+      backTitle: 'Select a Category',
       backgroundColor: Colors.blue[200],
       color: Colors.blue[800],
-      frontPanel: OrientationBuilder(builder: (context, orientation) {
+      backPanel: OrientationBuilder(builder: (context, orientation) {
         return orientationList(
           orientation,
           children: categories(),
         );
       }),
-      category: _selectedCategory,
+      frontPanel: _selectedCategory != null
+        ? UnitConverterRoute(category: _selectedCategory.category)
+        : null,
     );
   }
 }
