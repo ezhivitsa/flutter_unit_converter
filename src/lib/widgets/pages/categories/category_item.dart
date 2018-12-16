@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_unit_converter/interfaces/category.dart';
-import 'package:flutter_unit_converter/widgets/pages/unit_converter/route.dart';
 
 const double BORDER_RADIUS = 10.0;
 const double ICON_PADDING = 20.0;

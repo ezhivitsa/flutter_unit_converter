@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:math' as math;
 
 import 'package:flutter_unit_converter/widgets/pages/categories/category_item.dart';
 
@@ -79,9 +80,16 @@ class _FrontPanel extends StatelessWidget {
   final Widget child;
   final String title;
 
+  final Function onTap;
+  final Function onVerticalDragUpdate;
+  final Function onVerticalDragEnd;
+
   _FrontPanel({
     this.child,
     this.title,
+    this.onTap,
+    this.onVerticalDragUpdate,
+    this.onVerticalDragEnd,
   });
 
   @override
@@ -96,12 +104,16 @@ class _FrontPanel extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           GestureDetector(
+            behavior: HitTestBehavior.translucent,
             child: Container(
               height: 48.0,
               padding: EdgeInsetsDirectional.only(start: 16.0),
               alignment: AlignmentDirectional.centerStart,
               child: Text(this.title),
             ),
+            onTap: onTap,
+            onVerticalDragUpdate: onVerticalDragUpdate,
+            onVerticalDragEnd: onVerticalDragEnd,
           ),
           Divider(
             height: 1.0,
@@ -118,6 +130,8 @@ class _FrontPanel extends StatelessWidget {
 class _Layout extends State<Layout> with SingleTickerProviderStateMixin {
   AnimationController _controller;
 
+  final GlobalKey _layoutKey = GlobalKey(debugLabel: 'Layout');
+
   @override
   void didUpdateWidget(Layout oldWidget) {
     super.didUpdateWidget(oldWidget);
@@ -125,7 +139,7 @@ class _Layout extends State<Layout> with SingleTickerProviderStateMixin {
     if (
       oldWidget.category != null &&
       widget.category != null &&
-      oldWidget.category != widget.category
+      oldWidget.category.text != widget.category.text
     ) {
       setState(() {
         _controller.fling(
@@ -148,13 +162,13 @@ class _Layout extends State<Layout> with SingleTickerProviderStateMixin {
   }
 
   void _toggleBackdropPanelVisibility() {
-    if (!_backdropPanelVisible) {
-      setState(() {
-        _controller.fling(
-          velocity: _kFlingVelocity
-        );
-      });
-    }
+    setState(() {
+      _controller.fling(
+        velocity: _backdropPanelVisible
+          ? -_kFlingVelocity
+          : _kFlingVelocity
+      );
+    });
   }
 
   @override
@@ -170,6 +184,34 @@ class _Layout extends State<Layout> with SingleTickerProviderStateMixin {
     );
   }
 
+  double get _backdropHeight {
+    final RenderBox renderBox = _layoutKey.currentContext.findRenderObject();
+    return renderBox.size.height;
+  }
+
+  void _handleDragUpdate(DragUpdateDetails details) {
+    if (_controller.isAnimating ||
+        _controller.status == AnimationStatus.completed) return;
+
+    _controller.value -= details.primaryDelta / _backdropHeight;
+  }
+
+  void _handleDragEnd(DragEndDetails details) {
+    if (_controller.isAnimating ||
+        _controller.status == AnimationStatus.completed) return;
+
+    final double flingVelocity =
+        details.velocity.pixelsPerSecond.dy / _backdropHeight;
+    if (flingVelocity < 0.0)
+      _controller.fling(velocity: math.max(_kFlingVelocity, -flingVelocity));
+    else if (flingVelocity > 0.0)
+      _controller.fling(velocity: math.min(-_kFlingVelocity, -flingVelocity));
+    else
+      _controller.fling(
+          velocity:
+          _controller.value < 0.5 ? -_kFlingVelocity : _kFlingVelocity);
+  }
+
   Widget _buildStack(BuildContext context, BoxConstraints constraints) {
     const double panelTitleHeight = 48.0;
     final Size panelSize = constraints.biggest;
@@ -182,6 +224,7 @@ class _Layout extends State<Layout> with SingleTickerProviderStateMixin {
     ).animate(_controller.view);
 
     return Container(
+      key: _layoutKey,
       color: widget.backgroundColor,
       child: Stack(
         children: <Widget>[
@@ -189,8 +232,11 @@ class _Layout extends State<Layout> with SingleTickerProviderStateMixin {
           PositionedTransition(
             rect: panelAnimation,
             child: _FrontPanel(
+              onTap: _toggleBackdropPanelVisibility,
+              onVerticalDragUpdate: _handleDragUpdate,
+              onVerticalDragEnd: _handleDragEnd,
               child: widget.frontPanel,
-              title: widget.frontTitle,
+              title: widget.category.text,
             )
           )
         ],

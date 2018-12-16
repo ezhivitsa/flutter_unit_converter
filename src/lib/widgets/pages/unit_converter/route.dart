@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_unit_converter/interfaces/category.dart';
 
-import 'package:flutter_unit_converter/widgets/ui/layout.dart';
-
 import 'package:flutter_unit_converter/widgets/pages/unit_converter/convert_container.dart';
 import 'package:flutter_unit_converter/widgets/pages/unit_converter/exchange.dart';
 
@@ -15,9 +13,7 @@ class UnitConverterRoute extends StatefulWidget {
   });
 
   @override
-  _UnitConverterRouteState createState() => _UnitConverterRouteState(
-    this.category,
-  );
+  _UnitConverterRouteState createState() => _UnitConverterRouteState();
 }
 
 class _UnitConverterRouteState extends State<UnitConverterRoute> {
@@ -27,12 +23,11 @@ class _UnitConverterRouteState extends State<UnitConverterRoute> {
   double _toUnit;
   String _toValue;
 
-  Category category;
+  @override
+  void initState() {
+    super.initState();
 
-  _UnitConverterRouteState(Category category) {
-    this.category = category;
-
-    var units = category.getUnits();
+    var units = widget.category.getUnits();
     _fromUnit = units[0].conversion;
     _toUnit = units[0].conversion;
 
@@ -86,7 +81,7 @@ class _UnitConverterRouteState extends State<UnitConverterRoute> {
     return ListView(
       children: <Widget>[
         ConvertContainer(
-          category: this.category,
+          category: widget.category,
           label: 'From',
           hint: 'From value',
           selectedUnit: this._fromUnit,
@@ -96,7 +91,7 @@ class _UnitConverterRouteState extends State<UnitConverterRoute> {
         ),
         Exchange(),
         ConvertContainer(
-          category: this.category,
+          category: widget.category,
           label: 'To',
           hint: 'To value',
           selectedUnit: this._toUnit,

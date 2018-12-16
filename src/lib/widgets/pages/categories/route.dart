@@ -39,7 +39,10 @@ class _CategoryRoute extends State<CategoryRoute> {
       );
     } else {
       return GridView.count(
-          crossAxisCount: 2, childAspectRatio: 4, children: children);
+        crossAxisCount: 2,
+        childAspectRatio: 4,
+        children: children
+      );
     }
   }
 
@@ -69,7 +72,7 @@ class _CategoryRoute extends State<CategoryRoute> {
   @override
   Widget build(BuildContext context) {
     return Layout(
-      frontTitle: _selectedCategory?.text ?? '',
+      frontTitle: 'Categories',
       backTitle: 'Select a Category',
       backgroundColor: Colors.blue[200],
       color: Colors.blue[800],
@@ -82,6 +85,7 @@ class _CategoryRoute extends State<CategoryRoute> {
       frontPanel: _selectedCategory != null
         ? UnitConverterRoute(category: _selectedCategory.category)
         : null,
+      category: _selectedCategory,
     );
   }
 }
