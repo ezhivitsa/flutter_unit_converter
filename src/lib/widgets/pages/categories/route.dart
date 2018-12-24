@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:flutter_unit_converter/constants.dart';
+
 import 'package:flutter_unit_converter/models/distance_category.dart';
 import 'package:flutter_unit_converter/models/weight_category.dart';
 import 'package:flutter_unit_converter/models/time_category.dart';
@@ -31,8 +33,8 @@ class _CategoryRoute extends State<CategoryRoute> {
     });
   }
 
-  Widget orientationList(Orientation orientation, {List<Widget> children}) {
-    if (orientation == Orientation.portrait) {
+  Widget _orientationList(Orientation orientation, bool useMobileLayout, {List<Widget> children}) {
+    if (orientation == Orientation.portrait || !useMobileLayout) {
       return ListView.builder(
         itemBuilder: (BuildContext context, int index) => children[index],
         itemCount: children.length,
@@ -71,20 +73,22 @@ class _CategoryRoute extends State<CategoryRoute> {
 
   @override
   Widget build(BuildContext context) {
+    var shortestSide = MediaQuery.of(context).size.shortestSide;
+    var useMobileLayout = shortestSide < tabletBreakpoint;
+
     return Layout(
       frontTitle: 'Categories',
       backTitle: 'Select a Category',
       backgroundColor: Colors.blue[200],
       color: Colors.blue[800],
       backPanel: OrientationBuilder(builder: (context, orientation) {
-        return orientationList(
+        return _orientationList(
           orientation,
+          useMobileLayout,
           children: categories(),
         );
       }),
-      frontPanel: _selectedCategory != null
-        ? UnitConverterRoute(category: _selectedCategory.category)
-        : null,
+      frontPanel: UnitConverterRoute(category: _selectedCategory.category),
       category: _selectedCategory,
     );
   }

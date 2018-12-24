@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
+import 'package:flutter_unit_converter/constants.dart';
+
 import 'package:flutter_unit_converter/widgets/pages/categories/category_item.dart';
 
 const double _kFlingVelocity = 2.0;
@@ -190,15 +192,19 @@ class _Layout extends State<Layout> with SingleTickerProviderStateMixin {
   }
 
   void _handleDragUpdate(DragUpdateDetails details) {
-    if (_controller.isAnimating ||
-        _controller.status == AnimationStatus.completed) return;
+    if (_controller.isAnimating) return;
 
     _controller.value -= details.primaryDelta / _backdropHeight;
   }
 
   void _handleDragEnd(DragEndDetails details) {
-    if (_controller.isAnimating ||
-        _controller.status == AnimationStatus.completed) return;
+    if (
+      _controller.isAnimating ||
+      _controller.status == AnimationStatus.completed ||
+      _controller.status == AnimationStatus.dismissed
+    ) {
+      return;
+    }
 
     final double flingVelocity =
         details.velocity.pixelsPerSecond.dy / _backdropHeight;
@@ -244,8 +250,7 @@ class _Layout extends State<Layout> with SingleTickerProviderStateMixin {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
+  Widget _mobileLayout() {
     return Scaffold(
       appBar: AppBar(
         title: _LayoutTitle(
@@ -257,8 +262,8 @@ class _Layout extends State<Layout> with SingleTickerProviderStateMixin {
         leading: IconButton(
           onPressed: _toggleBackdropPanelVisibility,
           icon: AnimatedIcon(
-            icon: AnimatedIcons.close_menu,
-            progress: _controller.view
+              icon: AnimatedIcons.close_menu,
+              progress: _controller.view
           ),
         ),
         backgroundColor: widget.backgroundColor,
@@ -278,5 +283,38 @@ class _Layout extends State<Layout> with SingleTickerProviderStateMixin {
         builder: _buildStack,
       ),
     );
+  }
+
+  Widget _tabletLayout() {
+    return new Scaffold(
+      appBar: AppBar(
+        title: Text(widget.category.category.name),
+      ),
+      backgroundColor: widget.backgroundColor,
+      body: Row(
+        children: <Widget>[
+          Flexible(
+            flex: 1,
+            child: widget.backPanel,
+          ),
+          Flexible(
+            flex: 3,
+            child: widget.frontPanel,//            child: widget.frontPanel,
+          )
+        ],
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var shortestSide = MediaQuery.of(context).size.shortestSide;
+    var useMobileLayout = shortestSide < tabletBreakpoint;
+
+    if (useMobileLayout) {
+      return _mobileLayout();
+    } else {
+      return _tabletLayout();
+    }
   }
 }

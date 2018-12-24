@@ -76,9 +76,8 @@ class _UnitConverterRouteState extends State<UnitConverterRoute> {
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
+  Widget _content() {
+    return Column(
       children: <Widget>[
         ConvertContainer(
           category: widget.category,
@@ -100,6 +99,30 @@ class _UnitConverterRouteState extends State<UnitConverterRoute> {
           onUnitChanged: this.onToUnitChanged,
         )
       ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        if (constraints.maxHeight > constraints.maxWidth) {
+          return SingleChildScrollView(
+            child: Container(
+              child: _content()
+            ),
+          );
+        } else {
+          return SingleChildScrollView(
+            child: Center(
+              child: Container(
+                width: 500,
+                child: _content(),
+              )
+            )
+          );
+        }
+      },
     );
   }
 }
