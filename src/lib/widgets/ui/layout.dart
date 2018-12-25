@@ -299,7 +299,7 @@ class _Layout extends State<Layout> with SingleTickerProviderStateMixin {
           ),
           Flexible(
             flex: 3,
-            child: widget.frontPanel,//            child: widget.frontPanel,
+            child: widget.frontPanel,
           )
         ],
       ),

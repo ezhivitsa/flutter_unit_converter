@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_unit_converter/interfaces/category.dart';
-import 'package:flutter_unit_converter/models/unit.dart';
+import 'package:flutter_unit_converter/models/static_unit.dart';
 
 class WeightCategory extends Category {
   String name = 'Weight';

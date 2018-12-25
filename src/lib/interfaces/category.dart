@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_unit_converter/models/unit.dart';
+import 'package:flutter_unit_converter/interfaces/unit.dart';
 import 'package:flutter_unit_converter/models/select_item.dart';
 
 abstract class Category {
@@ -14,10 +14,13 @@ abstract class Category {
     return units.map((unit) {
       return SelectItem(
         label: unit.name,
-        value: unit.conversion,
       );
     }).toList();
   }
 
   ColorSwatch getColorSwatch();
+
+  Future<double> convert(Unit unitFrom, Unit unitTo, double value) async {
+    double conversionRate = await unitFrom.conversionRate(unitTo);
+  }
 }

@@ -5,6 +5,7 @@ import 'package:flutter_unit_converter/constants.dart';
 import 'package:flutter_unit_converter/models/distance_category.dart';
 import 'package:flutter_unit_converter/models/weight_category.dart';
 import 'package:flutter_unit_converter/models/time_category.dart';
+import 'package:flutter_unit_converter/models/money_category.dart';
 
 import 'package:flutter_unit_converter/widgets/ui/layout.dart';
 import 'package:flutter_unit_converter/widgets/pages/unit_converter/route.dart';
@@ -67,6 +68,12 @@ class _CategoryRoute extends State<CategoryRoute> {
         text: 'Time',
         category: TimeCategory(),
         onTap: this.onCategoryTap,
+      ),
+      CategoryItem(
+        icon: Icons.attach_money,
+        text: 'Money',
+        category: MoneyCategory(),
+        onTap: onCategoryTap,
       )
     ];
   }
