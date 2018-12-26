@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_unit_converter/interfaces/category.dart';
+import 'package:flutter_unit_converter/interfaces/unit.dart';
 
 import 'package:flutter_unit_converter/models/static_unit.dart';
 
@@ -9,13 +10,13 @@ class DistanceCategory extends Category {
 
   List<Unit> getUnits() {
     return <Unit>[
-      Unit(name: 'Meter', conversion: 1),
-      Unit(name: 'Kilometer', conversion: 1000),
-      Unit(name: 'Centimeter', conversion: 0.01),
-      Unit(name: 'Millimeter', conversion: 0.001),
-      Unit(name: 'Mile', conversion: 1609.35),
-      Unit(name: 'Yard', conversion: 0.9144),
-      Unit(name: 'Foot', conversion: 0.3048),
+      StaticUnit(name: 'Meter', conversion: 1, label: 'meter'),
+      StaticUnit(name: 'Kilometer', conversion: 1000, label: 'kmeter'),
+      StaticUnit(name: 'Centimeter', conversion: 0.01, label: 'cmeter'),
+      StaticUnit(name: 'Millimeter', conversion: 0.001, label: 'mmeter'),
+      StaticUnit(name: 'Mile', conversion: 1609.35, label: 'mile'),
+      StaticUnit(name: 'Yard', conversion: 0.9144, label: 'yard'),
+      StaticUnit(name: 'Foot', conversion: 0.3048, label: 'foot'),
     ];
   }
 

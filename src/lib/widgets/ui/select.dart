@@ -8,8 +8,8 @@ const DEFAULT_BORDER_COLOR = Color(0xFF9575CD);
 
 class Select extends StatelessWidget {
   final List<SelectItem> items;
-  final double value;
-  final Function(double) onChanged;
+  final String value;
+  final Function(String) onChanged;
   final Color color;
   final Color borderColor;
 
@@ -21,7 +21,7 @@ class Select extends StatelessWidget {
     this.borderColor = DEFAULT_BORDER_COLOR,
   });
 
-  List<DropdownMenuItem<double>> dropdownItems() {
+  List<DropdownMenuItem<String>> dropdownItems() {
     return items.map((item) {
       return DropdownMenuItem(
         value: item.value,

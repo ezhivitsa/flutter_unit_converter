@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_unit_converter/interfaces/category.dart';
+import 'package:flutter_unit_converter/interfaces/unit.dart';
 
 import 'package:flutter_unit_converter/widgets/ui/input.dart';
 import 'package:flutter_unit_converter/widgets/ui/select.dart';
 
 class ConvertContainer extends StatelessWidget {
   final Function(String) onValueChanged;
-  final Function(double) onUnitChanged;
+  final Function(Unit) onUnitChanged;
   final Category category;
   final String label;
-  final double selectedUnit;
+  final String selectedUnit;
   final String value;
   final String hint;
 
@@ -23,6 +24,13 @@ class ConvertContainer extends StatelessWidget {
     this.value,
     this.hint,
   });
+
+  void _onUnitChanged(String value) {
+    var units = category.getUnits();
+    var unit = units.firstWhere((u) => u.label == value);
+
+    onUnitChanged(unit);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +51,7 @@ class ConvertContainer extends StatelessWidget {
           Select(
             items: selectItems,
             value: this.selectedUnit,
-            onChanged: this.onUnitChanged,
+            onChanged: _onUnitChanged,
             color: swatch,
             borderColor: swatch['border'],
           ),

@@ -14,6 +14,7 @@ abstract class Category {
     return units.map((unit) {
       return SelectItem(
         label: unit.name,
+        value: unit.label,
       );
     }).toList();
   }
@@ -22,5 +23,7 @@ abstract class Category {
 
   Future<double> convert(Unit unitFrom, Unit unitTo, double value) async {
     double conversionRate = await unitFrom.conversionRate(unitTo);
+
+    return value * conversionRate;
   }
 }

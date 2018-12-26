@@ -15,8 +15,13 @@ class MoneyUnit implements Unit {
 
   @override
   Future<double> conversionRate(Unit unitTo) async {
-    var response = await getRates(label);
     var moneyUnitTo = unitTo as MoneyUnit;
+
+    if (label == moneyUnitTo.label) {
+      return 1.0;
+    }
+
+    var response = await getRates(label);
     var conversion = response.rates[moneyUnitTo.label];
 
     return conversion ?? 0;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_unit_converter/interfaces/category.dart';
+import 'package:flutter_unit_converter/interfaces/unit.dart';
 
 import 'package:flutter_unit_converter/widgets/pages/unit_converter/convert_container.dart';
 import 'package:flutter_unit_converter/widgets/pages/unit_converter/exchange.dart';
@@ -17,10 +18,10 @@ class UnitConverterRoute extends StatefulWidget {
 }
 
 class _UnitConverterRouteState extends State<UnitConverterRoute> {
-  double _fromUnit;
+  Unit _fromUnit;
   String _fromValue;
 
-  double _toUnit;
+  Unit _toUnit;
   String _toValue;
 
   @override
@@ -28,8 +29,8 @@ class _UnitConverterRouteState extends State<UnitConverterRoute> {
     super.initState();
 
     var units = widget.category.getUnits();
-    _fromUnit = units[0].conversion;
-    _toUnit = units[0].conversion;
+    _fromUnit = units[0];
+    _toUnit = units[0];
 
     _fromValue = '';
     _toValue = '';
@@ -42,37 +43,43 @@ class _UnitConverterRouteState extends State<UnitConverterRoute> {
     return valueString;
   }
 
-  void onFromValueChanged(String value) {
+  Future<void> onFromValueChanged(String value) async {
     double inputValue = double.tryParse(value) ?? 0;
+    var toValue = await widget.category.convert(_fromUnit, _toUnit, inputValue);
+
     this.setState(() {
       _fromValue = value;
-      _toValue = this.toValueString(inputValue * _fromUnit / _toUnit);
+      _toValue = toValueString(toValue);
     });
   }
 
-  void onFromUnitChanged(double unit) {
-    this.setState(() {
-      double inputValue = double.tryParse(_fromValue) ?? 0;
+  Future<void> onFromUnitChanged(Unit unit) async {
+    double inputValue = double.tryParse(_fromValue) ?? 0;
+    var toValue = await widget.category.convert(unit, _toUnit, inputValue);
 
+    this.setState(() {
       _fromUnit = unit;
-      _toValue = this.toValueString(inputValue * unit / _toUnit);
+      _toValue = toValueString(toValue);
     });
   }
   
-  void onToValueChanged(String value) {
+  Future<void> onToValueChanged(String value) async {
     double inputValue = double.tryParse(value) ?? 0;
+    var fromValue = await widget.category.convert(_toUnit, _fromUnit, inputValue);
+
     this.setState(() {
-      _fromValue = this.toValueString(inputValue / _fromUnit * _toUnit);
+      _fromValue = toValueString(fromValue);
       _toValue = value;
     });
   }
 
-  void onToUnitChanged(double unit) {
-    this.setState(() {
-      double inputValue = double.tryParse(_fromValue) ?? 0;
+  Future<void> onToUnitChanged(Unit unit) async {
+    double inputValue = double.tryParse(_fromValue) ?? 0;
+    var fromValue = await widget.category.convert(unit, _fromUnit, inputValue);
 
+    this.setState(() {
       _toUnit = unit;
-      _toValue = this.toValueString(inputValue * _fromUnit / unit);
+      _fromValue = toValueString(fromValue);
     });
   }
 
@@ -83,7 +90,7 @@ class _UnitConverterRouteState extends State<UnitConverterRoute> {
           category: widget.category,
           label: 'From',
           hint: 'From value',
-          selectedUnit: this._fromUnit,
+          selectedUnit: this._fromUnit.label,
           value: this._fromValue,
           onValueChanged: this.onFromValueChanged,
           onUnitChanged: this.onFromUnitChanged,
@@ -93,7 +100,7 @@ class _UnitConverterRouteState extends State<UnitConverterRoute> {
           category: widget.category,
           label: 'To',
           hint: 'To value',
-          selectedUnit: this._toUnit,
+          selectedUnit: this._toUnit.label,
           value: this._toValue,
           onValueChanged: this.onToValueChanged,
           onUnitChanged: this.onToUnitChanged,

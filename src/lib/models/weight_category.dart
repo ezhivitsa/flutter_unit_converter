@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_unit_converter/interfaces/category.dart';
+import 'package:flutter_unit_converter/interfaces/unit.dart';
+
 import 'package:flutter_unit_converter/models/static_unit.dart';
 
 class WeightCategory extends Category {
@@ -8,12 +10,12 @@ class WeightCategory extends Category {
 
   List<Unit> getUnits() {
     return <Unit>[
-      Unit(name: 'Kilogram', conversion: 1),
-      Unit(name: 'Gram', conversion: 0.001),
-      Unit(name: 'Miligram', conversion: 0.000001),
-      Unit(name: 'Metric Ton', conversion: 1000),
-      Unit(name: 'Long Ton', conversion: 1016.04608),
-      Unit(name: 'Pound', conversion: 0.453592),
+      StaticUnit(name: 'Kilogram', conversion: 1, label: 'kgram'),
+      StaticUnit(name: 'Gram', conversion: 0.001, label: 'gram'),
+      StaticUnit(name: 'Miligram', conversion: 0.000001, label: 'mgram'),
+      StaticUnit(name: 'Metric Ton', conversion: 1000, label: 'mton'),
+      StaticUnit(name: 'Long Ton', conversion: 1016.04608, label: 'lton'),
+      StaticUnit(name: 'Pound', conversion: 0.453592, label: 'pound'),
     ];
   }
 

@@ -3,16 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_unit_converter/interfaces/category.dart';
 import 'package:flutter_unit_converter/interfaces/unit.dart';
 
-import 'package:flutter_unit_converter/models/dynamic_unit.dart';
+import 'package:flutter_unit_converter/models/money_unit.dart';
 
 class MoneyCategory extends Category {
   String name = 'Distance';
 
   List<Unit> getUnits() {
     return <Unit>[
-      DynamicUnit(name: 'Us Dollar'),
-      DynamicUnit(name: 'Euro'),
-      DynamicUnit(name: 'BYN'),
+      MoneyUnit(name: 'Us Dollar', label: 'USD'),
+      MoneyUnit(name: 'Euro', label: 'EUR'),
     ];
   }
 
