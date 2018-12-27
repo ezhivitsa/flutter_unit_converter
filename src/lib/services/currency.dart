@@ -15,7 +15,11 @@ class RatesResponse {
   });
 
   factory RatesResponse.fromJson(Map<String, dynamic> json) {
-    Map<String, double> rates = json['rates'];
+    Map<String, double> rates = new Map<String, double>();
+
+    for (String key in json['rates'].keys) {
+      rates[key] = json['rates'][key];
+    }
 
     return RatesResponse(
       rates: rates,
@@ -26,9 +30,7 @@ class RatesResponse {
 }
 
 Future<RatesResponse> getRates(String from) async {
-  final response = await http.get(currencyApiUrl, headers: {
-    'base': from.toUpperCase(),
-  });
+  final response = await http.get('$currencyApiUrl?base=$from');
 
   if (response.statusCode == 200) {
     // If server returns an OK response, parse the JSON

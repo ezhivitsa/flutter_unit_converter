@@ -28,6 +28,19 @@ class _UnitConverterRouteState extends State<UnitConverterRoute> {
   void initState() {
     super.initState();
 
+    _init();
+  }
+
+  @override
+  void didUpdateWidget(UnitConverterRoute oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (widget.category != oldWidget.category) {
+      _init();
+    }
+  }
+
+  _init() {
     var units = widget.category.getUnits();
     _fromUnit = units[0];
     _toUnit = units[0];
@@ -75,11 +88,11 @@ class _UnitConverterRouteState extends State<UnitConverterRoute> {
 
   Future<void> onToUnitChanged(Unit unit) async {
     double inputValue = double.tryParse(_fromValue) ?? 0;
-    var fromValue = await widget.category.convert(unit, _fromUnit, inputValue);
+    var toValue = await widget.category.convert(_fromUnit, unit, inputValue);
 
     this.setState(() {
       _toUnit = unit;
-      _fromValue = toValueString(fromValue);
+      _toValue = toValueString(toValue);
     });
   }
 
